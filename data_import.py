@@ -55,6 +55,7 @@ def import_test_data():
     with ZipFile(f"{path}/{test_images}") as test_data:
         test_data.extractall(f"{path}")
     os.remove(f"{path}/{test_images}")
+    
 
 def clean_up():
     if os.path.isdir(path):
