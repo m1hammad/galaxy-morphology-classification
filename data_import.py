@@ -19,7 +19,13 @@ test_images = "images_test_rev1.zip"
 path = "temp_data"
 
 
+def clean_up():
+    if os.path.isdir(path):
+        shutil.rmtree(path)
+
+
 def import_target_values():
+    clean_up()
     api.competition_download_file(
         competition=dataset,
         file_name=output_file,
@@ -31,8 +37,12 @@ def import_target_values():
         target_val.extractall(f"{path}")
     os.remove(f"{path}/{output_file}")
 
+    return os.path.join( path, output_file.split(".")[0]+'.csv')
+    
+
 
 def import_training_data():
+    clean_up()
     api.competition_download_file(
         competition=dataset,
         file_name=training_images,
@@ -45,6 +55,7 @@ def import_training_data():
     os.remove(f"{path}/{training_images}")
 
 def import_test_data():
+    clean_up()
     api.competition_download_file(
         competition=dataset,
         file_name=test_images,
@@ -56,10 +67,6 @@ def import_test_data():
         test_data.extractall(f"{path}")
     os.remove(f"{path}/{test_images}")
     
-
-def clean_up():
-    if os.path.isdir(path):
-        shutil.rmtree(path)
 
 
 if __name__ == "__main__":
