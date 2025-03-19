@@ -73,6 +73,8 @@ def sql_connection(conn_string = connection_string):
         print("Connection to SQL server successful.")
         cursor = conn.cursor()
         cursor.execute("SELECT @@VERSION")
+        version = cursor.fetchone()
+        print("SQL Server version: ", version[0])
         return conn, cursor
     except Exception as e:
         cursor.close()
@@ -82,9 +84,10 @@ def sql_connection(conn_string = connection_string):
 def sql_connection_close():
     conn, cursor = sql_connection()
     try:
-        cursor.close()
-        conn.close()
-        print("SQL connection closed.")
+        if 'cursor' in locals() and 'conn' in locals():
+            cursor.close()
+            conn.close()
+            print("SQL connection closed.")
     except Exception as e:
         print("Error closing connection:", e)
 
