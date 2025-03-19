@@ -5,6 +5,8 @@ from azure.storage.blob import BlobServiceClient
 
 load_dotenv()
 
+
+
 connection_string = os.getenv("BLOB_CONNECTION_STRING")
 # container_id = os.getenv("CONTAINER_ID")
 training_container_id = "galaxy-zoo-training-images"
@@ -56,7 +58,7 @@ def blob_upload_image(container_id):
 
 
 if __name__ == '__main__':
-    # create_container(training_container_id)
+    create_container(training_container_id)
     # blob_upload_image(training_container_id)
     create_container(test_container_id)
-    blob_upload_image(test_container_id)
+    # blob_upload_image(test_container_id)
