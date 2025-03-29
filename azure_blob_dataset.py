@@ -6,6 +6,9 @@ import os
 from dotenv import load_dotenv
 from io import BytesIO
 from skimage import io, transform, img_as_float
+from torchvision.transforms.functional import to_pil_image
+import numpy as np
+
 
 load_dotenv()
 
@@ -41,7 +44,7 @@ class AzureBlobDataset(Dataset):
     
     def __getitem__(self, index):
         blob = self.blobs[index]
-        galaxy_id = os.path.splitext(blob.name)
+        galaxy_id = int(os.path.splitext(blob.name)[0])
 
         # Download and proccess image in memory
         img_client = self.blob_container.get_blob_client(blob)
@@ -58,7 +61,8 @@ class AzureBlobDataset(Dataset):
 
         # If additional transforms from TorchVision are provided 
         if self.transform:
-            img_tensor = self.transform(img)
+            pil_img = to_pil_image(img)
+            img_tensor = self.transform(pil_img)
         else:
             # Default conversion from numpy array to tensor, with channel-first format.
             img_tensor = torch.from_numpy(img).permute(2, 0, 1).float()
