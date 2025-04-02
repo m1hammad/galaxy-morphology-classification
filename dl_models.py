@@ -1,6 +1,6 @@
 from torch.utils.data import DataLoader, random_split
 import torch.nn as nn
-from torchvision.models import efficientnet_b0, efficientnet_b1, efficientnet_b2, efficientnet_b3, efficientnet_b4, efficientnet_b5, efficientnet_b6, efficientnet_b7
+from torchvision.models import efficientnet_b0, efficientnet_b1, efficientnet_b2, efficientnet_b3, efficientnet_b4, efficientnet_b5, efficientnet_b6, efficientnet_b7, resnet18, resnet50, vit_b_16, vit_b_32
 
 class CNNFromScratch(nn.Module):
     def __init__(self, num_outputs=37):
@@ -76,4 +76,26 @@ def get_efficientnet(version=0, num_outputs=37):
     in_features = model.classifier[1].in_features
     model.classifier[1] = nn.Linear(in_features, num_outputs)
 
+    return model
+
+def get_resnet(version, num_outputs=37):
+    if version == 18:
+        model = resnet18(pretrained=True)
+    elif version == 50:
+        model = resnet50(pretrained=True)
+    else:
+        raise ValueError("Version must be either 18 or 50.")
+    in_features = model.fc.in_features
+    model.fc = nn.Linear(in_features, num_outputs)
+    return model
+
+def get_vit(layers = 16, num_outputs=37):
+    if layers == 16:
+        model = vit_b_16(pretrained=True)
+    elif layers == 32:
+        model = vit_b_32(pretrained=True)
+    else:
+        raise ValueError("Layers must be either 16 or 32.")
+    in_features = model.heads.head.in_features
+    model.heads.head = nn.Linear(in_features, num_outputs)
     return model
