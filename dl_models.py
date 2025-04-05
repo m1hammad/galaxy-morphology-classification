@@ -46,7 +46,7 @@ class CNNFromScratch(nn.Module):
             nn.Linear(1024, num_outputs)   # Regression output
         )
 
-    def forward_pass(self, x):
+    def forward(self, x):
         x = self.features(x)
         x = self.classifier(x)
         return x
