@@ -30,8 +30,6 @@ Install dependencies with:
 pip install -r requirements.txt
 ```
 
-*(see below for a sample `requirements.txt`)*
-
 ---
 
 ## 🔧 Setup & Configuration
@@ -112,7 +110,7 @@ python main.py \
 
 * **Best Model**: ResNet‑50 achieved lowest test RMSE and MAE across 37 morphology outputs.
 * **Metrics**: MSE, RMSE, MAE, training & validation loss curves, and per-channel scatter plots included in the final report.
-* **Report**: See `SYSC_5108_Final_Report.pdf` for detailed tables, figures, and comparative analysis.
+* **Report**: See `dl_project_main.ipynb` for detailed tables, figures, and comparative analysis.
 
 ---
 
